@@ -1,0 +1,80 @@
+body {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0837B0 0%, #021E66 100%);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+body .counter-block {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  left: calc(50% - 150px);
+  top: 190px;
+  background: #FFFFFF;
+  box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+
+body .counter-block .counter {
+  position: absolute;
+  width: 170px;
+  height: 176px;
+  left: calc(50% - 85px);
+  top: calc(50% - 85px);
+  font-family: Roboto;
+  font-size: 150px;
+  text-align: center;
+  line-height: 176px;
+  color: #000000;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+body .buttons-block {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  left: calc(50% - 150px);
+  top: 490px;
+  padding: 34px 14px;
+
+}
+
+body .buttons-block .buttons-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+body .buttons-block .buttons-bottom {
+  display: flex;
+  margin-top: 34px;
+  justify-content: space-evenly;
+}
+
+body .buttons-block button {
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  width: 65px;
+  height: 65px;
+}
+
+body .buttons-block .plus-block {
+  background: url(./img/Vector.png) center center no-repeat,  #089C20;
+}
+
+body .buttons-block .minus-block {
+  background: url(./img/Minus.png) center center no-repeat,  #E7AA10;
+}
+
+body .buttons-block .reset-block {
+  background: url(./img/Reset.png) center center no-repeat,  #CF1C1C;
+}
+
+body .buttons-block .download {
+  background: url(./img/Download.png) center center no-repeat,  #30D9CF;
+}
+
+body .buttons-block .upload  {
+  background: url(./img/Upload.png) center center no-repeat,  #9B0F9E;
+}
