@@ -1,79 +1,52 @@
-import {createStore} from 'redux';
-
-const reducer = (state = 0, action) => {
-  switch (action.type) {
-    case 'INC':
-      return state + 1;
-    case 'DEC':
-      return state - 1;
-    case 'RL':
-      return 0;
-    case 'RND':
-      return action.value;
-    default:
-      return state;
-  }
-}
-
-const inc = () => ({type: 'INC'});
-const dec = () => ({type: 'DEC'});
-const rl = () => ({type: 'RL'});
-const rnd = (value) => ({type: 'RND', value});
+import {createStore, bindActionCreators} from 'redux';
+import reducer from './reduser';
+import {inc, dec, rl, rnd} from './action';
 
 const store = createStore(reducer);
+const {dispatch, subscribe} = store;
 
-const url = "./db.json";
-let num = [];
-let save = 1;
+const incDispatch = bindActionCreators(inc, dispatch);
+const decDispatch = bindActionCreators(dec, dispatch);
+const rlDispatch = bindActionCreators(rl, dispatch);
+const rndDispatch = bindActionCreators(rnd, dispatch);
+
+const url = 'http://localhost:3000/numbers';
+
+let number = [];
 let body = require('./db.json');
+body.numbers.map(num => {
+  if (num.const) number.push(num.const);
+});
 
-let postData = () => {
+const postData = (elem) => {
   return fetch(url, {
-  method: 'POST',
-  headers: {
-      'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(body)
-})
-  .then(resp => resp.json())
-  .then(data => {
-    data.numbers.map((constN) => {
-      if (constN.const) num.push(constN.const);
-      if (constN.saved) save++;
-    })
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(elem)
   })
-  .catch(error => console.log('aaa', error));
-} 
-postData();
+    .catch(error => console.log('aaa', error));
+}
 
-document.querySelector('.plus-block').addEventListener('click', () => {
-  store.dispatch(inc());
-});
-
-document.querySelector('.minus-block').addEventListener('click', () => {
-  store.dispatch(dec());
-});
-
-document.querySelector('.reset-block').addEventListener('click', () => {
-  store.dispatch(rl());
-});
+document.querySelector('.plus-block').addEventListener('click', incDispatch);
+document.querySelector('.minus-block').addEventListener('click', decDispatch);
+document.querySelector('.reset-block').addEventListener('click', rlDispatch);
 
 document.querySelector('.download').addEventListener('click', () => {
-  let value = +num[Math.floor(Math.random() * num.length)];
-  store.dispatch(rnd(value));
+  let value = +number[Math.floor(Math.random() * number.length)];
+  rndDispatch(value);
 });
 
 document.querySelector('.upload').addEventListener('click', () => {
   let elem = {};
   elem['saved'] = document.querySelector('.counter').textContent;
-  elem['id'] = save;
-  body.numbers.push(elem);
-  postData();
+  postData(elem);
 });
 
 const update = () => {
   document.querySelector('.counter').textContent = store.getState();
 }
 
-store.subscribe(update);
+subscribe(update);
 
