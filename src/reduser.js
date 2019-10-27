@@ -1,4 +1,4 @@
-const reducer = (state = 0, action) => {
+const reducer = (state = 5, action) => {
   switch (action.type) {
     case 'INC':
       return state + 1;
